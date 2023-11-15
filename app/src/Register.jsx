@@ -1,15 +1,16 @@
+// Register.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const navigate = useNavigate()
     const handleRegister = async () => {
         try {
             if (!email || !password) {
                 console.error('Please provide both email and password');
-                // Handle the error, e.g., display an error message to the user
                 return;
             }
 
@@ -20,35 +21,42 @@ const Register = () => {
 
             if (response.status === 201) {
                 console.log('Registration successful');
-                // You can redirect to a login page or perform other actions here
+                navigate('/login')
             } else {
                 console.error('Registration failed');
-                // Handle the error, e.g., display an error message to the user
             }
         } catch (error) {
             console.error('Error during registration:', error);
-            // Handle the error, e.g., display an error message to the user
         }
     };
 
     return (
-        <div>
-            <h2>Register</h2>
-            <label>
+        <div className="p-4">
+            <h2 className="text-2xl font-bold mb-4">Register</h2>
+            <label className="block mb-2">
                 Email:
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="border p-2 w-full"
+                />
             </label>
-            <br />
-            <label>
+            <label className="block mb-2">
                 Password:
                 <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    className="border p-2 w-full"
                 />
             </label>
-            <br />
-            <button onClick={handleRegister}>Register</button>
+            <button
+                onClick={handleRegister}
+                className="bg-green-500 text-white p-2 rounded hover:bg-green-700"
+            >
+                Register
+            </button>
         </div>
     );
 };

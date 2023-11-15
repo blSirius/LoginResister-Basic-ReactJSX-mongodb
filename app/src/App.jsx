@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import './App.css'
+import './index.css'
 
 function App() {
-  const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState('');
-  const [updatedTodo, setUpdatedTodo] = useState('');
 
   return (
     <div>

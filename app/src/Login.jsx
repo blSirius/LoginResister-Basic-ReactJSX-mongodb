@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,24 +12,19 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      // Make a POST request to the server using Axios
       const response = await axios.post('http://localhost:5000/login', {
         email,
         password,
       });
 
-      // Check if the login was successful
       if (response.status === 200) {
         console.log('Login successful');
-        navigate('/');
-        
-        // You can redirect to another page or perform other actions here
+        sessionStorage.setItem('token', email);
+        navigate('/home');
       } else if (response.status === 401) {
         console.error('Invalid credentials');
-        // Handle invalid credentials, e.g., display an error message to the user
       } else {
         console.error('Login failed');
-        // Handle other errors, e.g., display a generic error message
       }
     } catch (error) {
       console.error('Error during login:', error);
@@ -36,17 +32,32 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <label>Email:
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+    <div className="p-4">
+      <h2 className="text-2xl font-bold mb-4">Login</h2>
+      <label className="block mb-2">
+        Email:
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="border p-2 w-full"
+        />
       </label>
-      <br />
-      <label>Password:
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <label className="block mb-2">
+        Password:
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="border p-2 w-full"
+        />
       </label>
-      <br />
-      <button onClick={handleLogin}>Login</button>
+      <button
+        onClick={handleLogin}
+        className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700"
+      >
+        Login
+      </button>
     </div>
   );
 };
